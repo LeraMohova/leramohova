@@ -1,0 +1,56 @@
+Групповые запросы
+
+//1
+select n_group,
+         COunt(n_group) as student_count
+from student
+group by n_group;
+
+//2
+select n_group, MAX(score::numeric)
+from student
+group by n_group
+
+//3
+SELECT COUNT(*), st.surname
+FROM student st
+GROUP BY st.surname
+
+//5
+SELECT AVG(st.score)::numeric(3,2), substring(st.n_group::varchar, 1, 1) || ' Курс' as course
+FROM student st
+GROUP BY substring(st.n_group::varchar, 1, 1)
+
+//6
+SELECT AVG(score)::numeric(3,2), n_group
+FROM student
+WHERE n_group BETWEEN 2000 AND 2999
+GROUP BY n_group
+ORDER BY n_group DESC LIMIT 1
+
+//7
+select  AVG(score)::numeric(3,2),n_group
+from student
+group by n_group
+having AVG(score)::numeric(3,2) <= 3.5
+order by AVG(score)::numeric(3,2) ASC
+
+//8
+select n_group,count(*),
+       MAX(score),AVG(score)::numeric(3,2),
+	   MIN(score) 
+from student
+group by n_group
+
+//9
+SELECT name, surname, MAX(score)::numeric(3,2), n_group
+FROM student 
+WHERE n_group = 2214
+GROUP BY name, surname, n_group
+ORDER BY MAX(score)::numeric(3,2) DESC LIMIT 1
+
+//10
+SELECT name, surname, MAX(score)::numeric(3,2), n_group
+FROM student 
+GROUP BY name, surname, n_group
+ORDER BY MAX(score)::numeric(3,2) DESC
